@@ -23,14 +23,18 @@
             </form>
             <ul class="navbar-nav mr-auto" style="margin-left: 20px;">
                 <li class="nav-item active">
-                    <button class="btn btn-success my-2 my-sm-0" type="submit">ASK!</button>
+                    <button class="btn btn-success my-2 my-sm-0" type="button"
+                            onclick="window.location.href='{% url 'ask' %}'">ASK!
+                    </button>
+
                 </li>
             </ul>
             <form class="form-inline mt-2 mt-md-0">
                 <img src="../static/img/kotik.jpg" alt="" class="header-image">
                 <div class="d-flex flex-column">
-                    <div class = "text-light">User name</div>
-                    <div><a href="" style="margin-right: 10px;">Settings</a><a href="">Log out</a></div>
+                    <div class="text-light">User name</div>
+                    <div><a href="{% url 'settings' %}" style="margin-right: 10px;">Settings</a><a
+                            href="{% url 'login' %}">Log out</a></div>
                 </div>
             </form>
         </div>
@@ -41,8 +45,8 @@
 <main role="main" class="container">
     <div class="row" style="margin-bottom: 80px; margin-top: 30px;">
         <div class="col-8">
-          {% block content %}
-          {% endblock %}
+            {% block content %}
+            {% endblock %}
         </div>
         <div class="col-4">
             <div class="row" style="margin-left: 15px;">
@@ -50,11 +54,11 @@
                     <h2>Popular tags</h2>
                 </div>
                 <div class="tags" style="margin-left: 15px;">
-                    <span class="badge badge-primary">Python</span>
-                    <span class="badge badge-secondary">CSS</span>
-                    <span class="badge badge-success">Voloshin</span>
-                    <span class="badge badge-danger">Django</span>
-                    <span class="badge badge-dark">Vk</span>
+                    {% for tag in tags %}
+                    <span class="badge badge-primary"
+      onclick="window.location.href='{% url 'tag' tag_title=tag.title %}'"
+      style=" font-size: 15px; margin-right: 30px; margin-bottom: 4px;">{{ tag.title }}</span>
+                    {% endfor %}
                 </div>
                 <br/>
                 <div class="col-12">
@@ -62,11 +66,11 @@
                 </div>
 
                 <ul class="list-group" style="margin-left: 15px;">
-                    <li class="list-group-item"><a href="">facilisis</a></li>
-                    <li class="list-group-item"><a href="">facilisis</a></li>
-                    <li class="list-group-item"><a href="">facilisis</a></li>
-                    <li class="list-group-item"><a href="">facilisis</a></li>
-                    <li class="list-group-item"><a href="">facilisis</a></li>
+                    <li class="list-group-item"><a href="">Nabludatel</a></li>
+                    <li class="list-group-item"><a href="">Krosh</a></li>
+                    <li class="list-group-item"><a href="">Yosh</a></li>
+                    <li class="list-group-item"><a href="">Lis</a></li>
+                    <li class="list-group-item"><a href="">Ktoto</a></li>
                 </ul>
             </div>
         </div>

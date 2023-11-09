@@ -1,0 +1,31 @@
+<div style="margin-top:20px; text-align: center;">
+    {% if page.page_info.has_previous %}
+    <button type="button" class="btn btn-light"
+            onclick="window.location.href='{{ request.path }}?page={{ page.page_info.previous_page_number }}'">Previous
+    </button>
+    {% else %}
+    <button type="button" class="btn btn-light disabled">Previous</button>
+    {% endif %}
+
+    {% for page_index in page.page_range %}
+    {% if page_index == page.page_info.number %}
+    <button type="button" class="btn btn-primary"
+            onclick="window.location.href='{{ request.path }}?page={{ page_index }}'">{{ page_index }}
+    </button>
+    {% else %}
+    <button type="button" class="btn btn-light"
+            onclick="window.location.href='{{ request.path }}?page={{ page_index }}'">{{ page_index }}
+    </button>
+    {% endif %}
+    {% endfor %}
+
+
+    {% if page.page_info.has_next %}
+    <button type="button" class="btn btn-light"
+            onclick="window.location.href='{{ request.path }}?page={{ page.page_info.next_page_number }}'">Next
+    </button>
+    {% else %}
+    <button type="button" class="btn btn-light disabled">Next</button>
+    {% endif %}
+</div>
+

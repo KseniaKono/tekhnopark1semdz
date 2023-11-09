@@ -1,0 +1,21 @@
+{% load static %}
+
+<div class="row question">
+    <div class="col-3">
+        <img src="{% static '/img/kotik.jpg' %}" alt="" class="answer-image">
+        <div class="likes-container">
+            <div class="likes-count">5</div>
+            <button type="button" class="btn btn-primary like-button">+</button>
+            <button type="button" class="btn btn-danger like-button">-</button>
+        </div>
+    </div>
+    <div class="col-9">
+        <div class="question-text">{{ answer.content }}</div>
+        <div class="form-check" style="margin-top: 20px;">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1">
+            <label class="form-check-label" for="flexCheckDefault1">
+                Correct!
+            </label>
+        </div>
+    </div>
+</div>
