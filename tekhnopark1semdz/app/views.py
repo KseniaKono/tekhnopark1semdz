@@ -1,5 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, get_list_or_404
 from django.core.paginator import Paginator
+from .models import *
+
 
 QUESTIONS = [
     {
@@ -25,6 +27,8 @@ TAGS = [
     {'id': 5, 'title': 'Jango'},
 ]
 
+def get_top_tags():
+    return Tag.objects.popular()[:5]
 
 def paginate(objects, request, per_page=10):
     paginator = Paginator(objects, per_page)
@@ -49,26 +53,26 @@ def paginate(objects, request, per_page=10):
 
 # Create your views here.
 def index(request):
-    page = paginate(QUESTIONS, request, 10)
-    return render(request, 'index.html', {'questions': page['obj_list'], 'tags': TAGS, 'page': page})
+    page = paginate(Question.objects.new(), request, 10)
+    return render(request, 'index.html', {'questions': page['obj_list'], 'tags': get_top_tags(), 'page': page})
 
 
 def hot(request):
-    page = paginate(QUESTIONS, request, 10)
-    return render(request, 'index.html', {'questions': page['obj_list'], 'tags': TAGS, 'page': page})
+    page = paginate(Question.objects.best(), request, 10)
+    return render(request, 'index.html', {'questions': page['obj_list'], 'tags': get_top_tags(), 'page': page})
 
 
 def question(request, question_id):
-    page = paginate(ANSWERS, request, 10)
+    question = get_object_or_404(Question, pk=question_id)
+    page = paginate(Answer.objects.filter(question=question), request, 10)
     item = QUESTIONS[question_id]
-    return render(request, 'question.html',  {'answers': page['obj_list'], 'question': item, 'tags': TAGS, 'page': page})
+    return render(request, 'question.html',  {'answers': page['obj_list'], 'question': question, 'tags': get_top_tags(), 'page': page})
 
 
 def tag(request, tag_title):
-    page = paginate(QUESTIONS, request, 10)
-    for item in TAGS:
-        if item['title'] == tag_title:
-            return render(request, 'tag.html', {'tag': item, 'questions': page['obj_list'], 'tags': TAGS, 'page': page})
+    questions = get_list_or_404(Question.objects.by_tag(tag_title))
+    page = paginate(questions, request, 10)
+    return render(request, 'tag.html', {'tag_name': tag_title, 'questions': page['obj_list'], 'tags': get_top_tags(), 'page': page})
 
 
 def ask(request):

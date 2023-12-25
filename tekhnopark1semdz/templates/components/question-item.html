@@ -4,7 +4,7 @@
     <div class="col-3">
         <img src="{% static '/img/kotik.jpg' %}" alt="" class="question-image">
         <div class="likes-container">
-            <div class="likes-count">5</div>
+            <div class="likes-count">{{ question.rating }}</div>
             <button type="button" class="btn btn-primary like-button">+</button>
             <button type="button" class="btn btn-danger like-button">-</button>
         </div>
@@ -14,8 +14,8 @@
         </div>
         <div class="question-text">{{ question.content }}</div>
         <div class="row" style="margin-top: 30px;">
-            <div class="question-text col-3"><a href="{% url 'question' question_id=question.id %}">answer (3)</a></div>
-            <div class="question-text col-9">Tags: {% for tag in tags %}
+            <div class="question-text col-3"><a href="{% url 'question' question_id=question.id %}">answer ({{ question.ans_counter }})</a></div>
+            <div class="question-text col-9">Tags: {% for tag in question.tags.all %}
                 <a href="{% url 'tag' tag_title=tag.title %}" style="margin-right: 5px">{{ tag.title }}</a>
                 {% endfor %}
             </div>
