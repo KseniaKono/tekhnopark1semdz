@@ -3,6 +3,7 @@ from datetime import datetime
 from django.contrib import auth
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.forms import model_to_dict
 from django.http import HttpResponseForbidden
 from django.shortcuts import render, get_object_or_404, get_list_or_404
 from django.core.paginator import Paginator
@@ -144,18 +145,23 @@ def signup(request):
 
     return render(request, 'signup.html', {'tags': get_top_tags(), "form": user_form})
 
-
+@csrf_protect
 @login_required(redirect_field_name='continue', login_url='login')
 def settings(request):
     if request.method == "GET":
         user = request.user
-        settings_form = SettingsForm()
+        user_profile_data = model_to_dict(request.user.profile)
+        user_data = model_to_dict(request.user)
+
+        initial_data = {**user_data, **user_profile_data}
+        settings_form = SettingsForm(initial=initial_data)
         if not user.is_authenticated:
             return HttpResponseForbidden()
 
     if request.method == "POST":
-        settings_form = SettingsForm(data=request.POST)
+        settings_form = SettingsForm(request.POST, request.FILES, instance=request.user)
         if settings_form.is_valid():
+            settings_form.save()
             user = request.user
             if user.is_authenticated:
                 if settings_form.cleaned_data["nickname"] != user.username and settings_form.cleaned_data["nickname"] != "":
@@ -166,3 +172,7 @@ def settings(request):
                     user.save()
     return render(request, "settings.html", {'tags': get_top_tags(), "form": settings_form})
 
+@csrf_protect
+@login_required
+def like(request):
+    return

@@ -5,7 +5,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.fields import GenericRelation
 class Profile(models.Model):
-    avatar = models.ImageField(null=True, blank=True)
+    avatar = models.ImageField(null=True, blank=True, default="kotik.jpg", upload_to="avatar/%Y/%m/%d")
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     nickname = models.CharField(max_length=20)
     def __str__(self):

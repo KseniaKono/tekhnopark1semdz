@@ -29,7 +29,7 @@
             </ul>
             {% if user.is_authenticated %}
             <form class="form-inline mt-2 mt-md-0">
-                <img src="{% static '/img/kotik.jpg' %}" alt="" class="header-image">
+                <img src="{{ request.user.profile.avatar.url }}" alt="Profile Avatar" class="header-image">
                 <div class="d-flex flex-column">
                     <div class="text-light">{{ user.profile.nickname }}</div>
                     <div><a href="{% url 'settings' %}" style="margin-right: 10px;">Settings</a><a
@@ -92,6 +92,12 @@
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
+
+
+
+
 <script src="{% static '/js/bootstrap.js' %}"></script>
+<script src="{% static '/js/main.js' %}"></script>
+
 </body>
 </html>

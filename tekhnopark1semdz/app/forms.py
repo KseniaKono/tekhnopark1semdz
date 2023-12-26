@@ -81,13 +81,42 @@ class AskForm(forms.Form):
         return tag_list
 
 
-class SettingsForm(forms.Form):
+class SettingsForm(forms.ModelForm):
     nickname = forms.CharField(min_length=5, required=False, widget=forms.TextInput())
     email = forms.EmailField(required=False, widget=forms.EmailInput())
     avatar = forms.ImageField(required=False, widget=forms.FileInput())
     class Meta:
         model = User
         fields = ['email']
+
+    def save(self, **kwargs):
+        user = super().save(**kwargs)
+
+        profile = user.profile
+        received_avatar = self.cleaned_data.get('avatar')
+        if received_avatar:
+            profile.avatar = self.cleaned_data.get('avatar')
+            profile.save()
+
+        return user
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -3,10 +3,10 @@
 <div class="row question">
     <div class="col-3">
         <img src="{% static '/img/kotik.jpg' %}" alt="" class="question-image">
-        <div class="likes-container">
+        <div class="likes-container likes-section">
             <div class="likes-count">{{ question.rating }}</div>
             <button type="button" class="btn btn-primary like-button">+</button>
-            <button type="button" class="btn btn-danger like-button">-</button>
+            <button type="button" class="btn btn-danger dislike-button">-</button>
         </div>
     </div>
     <div class="col-9">
