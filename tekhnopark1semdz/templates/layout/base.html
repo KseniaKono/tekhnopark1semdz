@@ -23,18 +23,26 @@
             </form>
             <ul class="navbar-nav mr-auto" style="margin-left: 20px;">
                 <li class="nav-item active">
-                        <a class="btn btn-success my-2 my-sm-0" href="{% url 'ask' %}" role="button">ASK!</a>
+                    <a class="btn btn-success my-2 my-sm-0" href="{% url 'ask' %}" role="button">ASK!</a>
 
                 </li>
             </ul>
+            {% if user.is_authenticated %}
             <form class="form-inline mt-2 mt-md-0">
                 <img src="{% static '/img/kotik.jpg' %}" alt="" class="header-image">
                 <div class="d-flex flex-column">
-                    <div class="text-light">User name</div>
+                    <div class="text-light">{{ user.profile.nickname }}</div>
                     <div><a href="{% url 'settings' %}" style="margin-right: 10px;">Settings</a><a
-                            href="{% url 'login' %}">Log out</a></div>
+                            href="{% url 'logout' %}?continue={{ request.path }}">Log out</a></div>
                 </div>
             </form>
+            {% else %}
+            <form class="form-inline mt-2 mt-md-0">
+                <div><a href="{% url 'login' %}" style="margin-right: 10px;">Login</a><a href="{% url 'signup' %}">Register</a>
+                </div>
+            </form>
+             {% endif %}
+
         </div>
     </nav>
 </header>
@@ -54,8 +62,8 @@
                 <div class="tags" style="margin-left: 15px;">
                     {% for tag in tags %}
                     <span class="badge badge-primary"
-      onclick="window.location.href='{% url 'tag' tag_title=tag.title %}'"
-      style=" font-size: 15px; margin-right: 30px; margin-bottom: 4px;">{{ tag.title }}</span>
+                          onclick="window.location.href='{% url 'tag' tag_title=tag.title %}'"
+                          style=" font-size: 15px; margin-right: 30px; margin-bottom: 4px;">{{ tag.title }}</span>
                     {% endfor %}
                 </div>
                 <br/>

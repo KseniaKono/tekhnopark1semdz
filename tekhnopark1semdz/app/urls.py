@@ -10,7 +10,8 @@ urlpatterns = [
     path('question/<int:question_id>', views.question, name='question'),
     path('tag/<slug:tag_title>', views.tag, name='tag'),
     path('ask/', views.ask, name='ask'),
-    path('login/', views.login, name='login'),
+    path('login/', views.user_login, name='login'),
     path('signup/', views.signup, name='signup'),
-    path('settings/', views.settings, name='settings'),
+    path('profile/edit/', views.settings, name='settings'),
+    path('logout/', views.user_logout, name='logout'),
 ]

@@ -93,7 +93,7 @@ class Answer(models.Model):
     date_cr = models.DateTimeField(default=timezone.now)
     is_correct = models.BooleanField(default=False)
     rating = models.IntegerField(default=0)
-    likes = GenericRelation(Like)
+    likes = GenericRelation(Like, null=True)
     objects = AnswerManager()
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)

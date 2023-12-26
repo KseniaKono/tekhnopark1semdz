@@ -1,34 +1,15 @@
-{% extends 'layout/base-non-auth.html' %}
+{% extends 'layout/base.html' %}
+{% load django_bootstrap5 %}
 
 {% block content %}
 
 <h1>Log In</h1>
-<div class="text-danger">Sorry, wrong password!</div>
-<form style="margin-top: 30px;">
-    <div class="form-group row">
-        <label for="inputLogin" class="col-sm-2 col-form-label">Login</label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control col-md-6" id="inputLogin" placeholder="Enter your login here"
-                   maxlength="15">
-        </div>
-    </div>
+<div><a href="{% url 'signup' %}">Register</a></div>
+<form method = "post" style="margin-top: 30px;">
+    {% csrf_token %}
+         {% bootstrap_form form %}
 
-    <div class="form-group row">
-        <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control col-md-6" id="inputPassword"
-                   placeholder="Enter your password here" maxlength="15">
-        </div>
-    </div>
-
-    <div class="form-group row">
-        <div class="col-2"></div>
-        <div class="col-10">
-            <button type="submit" class="btn btn-primary">Log in!</button>
-            <div><a href="{% url 'signup' %}">create new account</a></div>
-        </div>
-    </div>
-
+    <button type="submit" class="btn btn-primary">Login</button>
 </form>
 
 {% endblock %}

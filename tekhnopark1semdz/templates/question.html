@@ -1,4 +1,5 @@
 {% extends 'layout/base.html' %}
+{% load django_bootstrap5 %}
 
 {% block content %}
 {% load static %}
@@ -18,8 +19,8 @@
             {{ question.content }}
         </div>
         <div class="question-text" style="margin-top: 30px;">Tags: {% for tag in question.tags.all %}
-                <a href="{% url 'tag' tag_title=tag.title %}" style="margin-right: 5px">{{ tag.title }}</a>
-                {% endfor %}
+            <a href="{% url 'tag' tag_title=tag.title %}" style="margin-right: 5px">{{ tag.title }}</a>
+            {% endfor %}
         </div>
     </div>
 </div>
@@ -33,14 +34,13 @@
 
 {% include 'components/paginator.html' %}
 <hr>
-<div class="form-group row">
-                        <textarea class="form-control" id="inputText" rows="5"
-                                  placeholder="Enter your answer here">
+{% if user.is_authenticated %}
+<form method="POST" name="form">
+        {% csrf_token %}
 
-                        </textarea>
-</div>
-<div class="form-group row">
+        {% bootstrap_form form %}
     <button type="submit" class="btn btn-primary">Answer</button>
-</div>
+</form>
+{% endif %}
 
 {% endblock %}
